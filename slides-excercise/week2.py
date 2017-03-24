@@ -66,3 +66,11 @@ df2 = pd.DataFrame([['Store 2', 'Kevyn','Kitty Food', 3.0]], columns = ['Locatio
 df2 = df2.set_index(['Location', 'Name'])
 df = df.append(df2)
 print(df)
+
+#the solution was much better an clean :| :)
+
+
+df = df.set_index([df.index, 'Name'])
+df.index.names = ['Location', 'Name']
+df = df.append(pd.Series(data={'Cost': 3.00, 'Item Purchased': 'Kitty Food'}, name=('Store 2', 'Kevyn')))
+df
