@@ -18,7 +18,7 @@ df = pd.DataFrame(
     index=['Store 1', 'Store 1', 'Store 2']
 )
 # Your code here
-print(df['Item Purchased'])
+# print(df['Item Purchased'])
 
 
 #For the purchase records from the pet store, how would you update the DataFrame,
@@ -39,7 +39,7 @@ df = pd.DataFrame([purchase_1, purchase_2, purchase_3], index=['Store 1', 'Store
 
 # Your answer here
 df['Cost'] *= 0.8
-print(df)
+# print(df)
 
 #Reindex the purchase records DataFrame to be indexed hierarchically, first by store, then by person. Name these #
 # indexes 'Location' and 'Name'. Then add a new entry to it with the value of:
@@ -57,5 +57,12 @@ purchase_3 = pd.Series({'Name': 'Vinod',
 
 df = pd.DataFrame([purchase_1, purchase_2, purchase_3], index=['Store 1', 'Store 1', 'Store 2'])
 
-
+df = df.reset_index()
+df.columns = ['Location', 'Name', 'Item Purchased', 'Cost']
+df = df.set_index(['Location', 'Name'])
 # Your answer here
+df2 = pd.DataFrame([['Store 2', 'Kevyn','Kitty Food', 3.0]], columns = ['Location', 'Name', 'Item Purchased', 'Cost'])
+# TODO find a better way to set index and value
+df2 = df2.set_index(['Location', 'Name'])
+df = df.append(df2)
+print(df)
