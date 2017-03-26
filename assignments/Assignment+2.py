@@ -14,7 +14,7 @@
 # 
 # The columns are organized as # of Summer games, Summer medals, # of Winter games, Winter medals, total # number of games, total # of medals. Use this dataset to answer the questions below.
 
-# In[ ]:
+# In[13]:
 
 import pandas as pd
 
@@ -36,7 +36,22 @@ df.index = names_ids.str[0] # the [0] element is the country name (new index)
 df['ID'] = names_ids.str[1].str[:3] # the [1] element is the abbreviation or ID (take first 3 characters from that)
 
 df = df.drop('Totals')
-df.head()
+#df.head()
+
+def answer_one(df):
+    # This function returns the row for Afghanistan, which is a Series object. The assignment
+    # question description will tell you the general format the autograder is expecting
+  
+    return df['Gold'].idxmax(1)
+
+# You can examine what your function returns by calling it in the cell. If you have questions
+# about the assignment formats, check out the discussion forums for any FAQs
+answer_one(df) 
+
+
+# In[ ]:
+
+
 
 
 # ### Question 0 (Example)
@@ -45,18 +60,23 @@ df.head()
 # 
 # *This function should return a Series.*
 
-# In[ ]:
+# In[14]:
 
 # You should write your whole answer within the function provided. The autograder will call
 # this function and compare the return value against the correct solution value
-def answer_zero():
+def answer_zero(df):
     # This function returns the row for Afghanistan, which is a Series object. The assignment
     # question description will tell you the general format the autograder is expecting
     return df.iloc[0]
 
 # You can examine what your function returns by calling it in the cell. If you have questions
 # about the assignment formats, check out the discussion forums for any FAQs
-answer_zero() 
+answer_zero(df) 
+
+
+# In[ ]:
+
+
 
 
 # ### Question 1
@@ -64,10 +84,15 @@ answer_zero()
 # 
 # *This function should return a single string value.*
 
-# In[ ]:
+# In[16]:
 
 def answer_one():
-    return "YOUR ANSWER HERE"
+    return df['Gold'].idxmax(1)
+
+
+# In[ ]:
+
+
 
 
 # ### Question 2
