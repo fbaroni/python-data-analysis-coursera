@@ -14,7 +14,7 @@
 # 
 # The columns are organized as # of Summer games, Summer medals, # of Winter games, Winter medals, total # number of games, total # of medals. Use this dataset to answer the questions below.
 
-# In[13]:
+# In[65]:
 
 import pandas as pd
 
@@ -36,17 +36,298 @@ df.index = names_ids.str[0] # the [0] element is the country name (new index)
 df['ID'] = names_ids.str[1].str[:3] # the [1] element is the abbreviation or ID (take first 3 characters from that)
 
 df = df.drop('Totals')
-#df.head()
+df.head()
+#Which state has the most counties in it? (hint: consider the sumlevel key carefully! 
+#You'll need this for future questions too...)
+#This function should return a single string value.
 
-def answer_one(df):
-    # This function returns the row for Afghanistan, which is a Series object. The assignment
-    # question description will tell you the general format the autograder is expecting
-  
-    return df['Gold'].idxmax(1)
+census_df = pd.read_csv('census.csv')
+#census_df.head()
 
-# You can examine what your function returns by calling it in the cell. If you have questions
-# about the assignment formats, check out the discussion forums for any FAQs
-answer_one(df) 
+def answer_five(census_df):
+    census_mask = census_df['SUMLEV'] == 50
+    #select distinct de los state 
+    census_copy = census_df.copy()
+    state_names = (census_copy.drop_duplicates('STATE'))['STNAME']
+    state_names = state_names.rename('State Names')
+    print(state_names)
+    
+    for state_name in state_names.interrows():
+        totals[state_name] = census_df[census_df['STNAME'] == 'Alabama']
+    
+    print(totals)
+    
+answer_five(census_df)    
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
 
 
 # In[ ]:
@@ -60,7 +341,7 @@ answer_one(df)
 # 
 # *This function should return a Series.*
 
-# In[14]:
+# In[9]:
 
 # You should write your whole answer within the function provided. The autograder will call
 # this function and compare the return value against the correct solution value
@@ -79,15 +360,40 @@ answer_zero(df)
 
 
 
+# In[ ]:
+
+
+
+
 # ### Question 1
 # Which country has won the most gold medals in summer games?
 # 
 # *This function should return a single string value.*
 
-# In[16]:
+# In[12]:
 
 def answer_one():
     return df['Gold'].idxmax(1)
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
 
 
 # In[ ]:
@@ -100,10 +406,16 @@ def answer_one():
 # 
 # *This function should return a single string value.*
 
-# In[ ]:
+# In[26]:
 
 def answer_two():
-    return "YOUR ANSWER HERE"
+    difference = abs(df['Gold'] - df['Gold.1'])
+    return difference.idxmax(1)
+
+
+# In[ ]:
+
+
 
 
 # ### Question 3
@@ -118,7 +430,10 @@ def answer_two():
 # In[ ]:
 
 def answer_three():
-    return "YOUR ANSWER HERE"
+    countries = (df['Gold'] > 0) * (df['Gold.1'] > 0)
+    difference = (abs(df['Gold'] - df['Gold.1']) / (df['Gold'] + df['Gold.1'])) * countries
+   
+    return difference.idxmax(1)
 
 
 # ### Question 4
@@ -126,10 +441,17 @@ def answer_three():
 # 
 # *This function should return a Series named `Points` of length 146*
 
-# In[ ]:
+# In[46]:
 
 def answer_four():
-    return "YOUR ANSWER HERE"
+    points = df['Gold.2'] * 3 + df['Silver.2'] * 2 + df['Bronze.2'] * 1
+      
+    return points.rename('Points')
+
+
+# In[ ]:
+
+
 
 
 # ## Part 2
